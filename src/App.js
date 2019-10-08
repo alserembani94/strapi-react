@@ -5,15 +5,17 @@ const App = () => {
     const [loaded, setLoaded] = useState(false);
     const [users, setUsers] = useState([]);
 
-    useEffect(async() => {
-        let response = await fetch("http://localhost:1337/users");
-        if (!response.ok) {
-            return;
+    useEffect(() => {
+        const fetchData = async() => {
+            let response = await fetch("https://strapi-react.herokuapp.com/users");
+            if (!response.ok) {
+                return;
+            }
+            let users = await response.json();
+            setUsers(users);
+            setLoaded(true);
         }
-
-        let users = await response.json();
-        setUsers(users);
-        setLoaded(true);
+        fetchData();
     }, []);
     
     return (
